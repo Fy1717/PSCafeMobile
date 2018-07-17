@@ -1,12 +1,17 @@
 package com.example.x.ultrapskafe;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.StrictMode;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
+
+
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -21,19 +26,17 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-public class MainActivity extends AppCompatActivity {
-    ListView liste;
+public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener {
+    private SwipeRefreshLayout swipeRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        liste=(ListView) findViewById(R.id.listView);
-        WebServisIleDoldur();
-    }
+        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
+        swipeRefresh.setOnRefreshListener(this);
 
-
-    private  void WebServisIleDoldur(){
+        final List<Masa> masalar = new ArrayList<>();
 
         StrictMode.ThreadPolicy policy=new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
@@ -42,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         String masalar_url="http://tunalisimitcisi.com/MasaDurum.asmx/MasalariGetir";
 
-        List<String> masalar_list=new ArrayList<>();
+
 
 
         HttpURLConnection baglanti=null;
@@ -70,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 Document document=documentBuilder.parse(stream);
 
 
-                NodeList masalarNodeList=document.getElementsByTagName("Masalar");
+                final NodeList masalarNodeList=document.getElementsByTagName("Masalar");
 
 
                 for (int i=0;i<masalarNodeList.getLength(); i++){
@@ -88,7 +91,19 @@ public class MainActivity extends AppCompatActivity {
 
                     NodeList nodeListKOL_SAYISI=element.getElementsByTagName("KOL_SAYISI");
 
+                    NodeList nodeListACILIS_SAATI=element.getElementsByTagName("ACILIS_SAATI");
+
+                    NodeList nodeListKAPANIS_SAATI=element.getElementsByTagName("KAPANIS_SAATI");
+
                     NodeList nodeListUCRET=element.getElementsByTagName("UCRET");
+
+                    NodeList nodeListYAPILAN_ISLER=element.getElementsByTagName("YAPILAN_ISLER");
+
+                    NodeList nodeListTARIH_SAAT=element.getElementsByTagName("TARIH_SAAT");
+
+                    NodeList nodeListKAZANC=element.getElementsByTagName("KAZANC");
+
+
 
 
                     String ID=nodeListID.item(0).getFirstChild().getNodeValue ();
@@ -101,11 +116,37 @@ public class MainActivity extends AppCompatActivity {
 
                     String KOL_SAYISI=nodeListKOL_SAYISI.item(0).getFirstChild().getNodeValue();
 
+                    String ACILIS_SAATI=nodeListACILIS_SAATI.item(0).getFirstChild().getNodeValue();
+
+                    String KAPANIS_SAATI=nodeListKAPANIS_SAATI.item(0).getFirstChild().getNodeValue();
+
                     String UCRET=nodeListUCRET.item(0).getFirstChild().getNodeValue();
 
-                    Masa Masa = new Masa(ID,MASA_NO,MASA_TURU_ID,MASA_DURUM);
+                    String YAPILAN_ISLER=nodeListYAPILAN_ISLER.item(0).getFirstChild().getNodeValue();
+
+                    String TARIH_SAAT=nodeListTARIH_SAAT.item(0).getFirstChild().getNodeValue();
+
+                    String KAZANC=nodeListKAZANC.item(0).getFirstChild().getNodeValue();
+
+
+
+                    masalar.add( new Masa(ID,MASA_NO,MASA_TURU_ID,MASA_DURUM,KOL_SAYISI,ACILIS_SAATI,KAPANIS_SAATI,UCRET,YAPILAN_ISLER,TARIH_SAAT,KAZANC));
 
                 }
+                final ListView listemiz = (ListView) findViewById(R.id.liste);
+                OzelAdapter adaptorumuz=new OzelAdapter(this, masalar);
+                listemiz.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setTitle("MASA  "+ masalar.get(i).getMASA_NO());
+                        builder.setMessage(" Açılış Saati  : "+masalar.get(i).getACILIS_SAATI()+"\n Kapanış Saati  : "+masalar.get(i).getKAPANIS_SAATI()+"\n Kol Sayısı  : " +masalar.get(i).getKOL_SAYISI());
+
+
+                        builder.show();
+                    }
+                });
+                listemiz.setAdapter(adaptorumuz);
 
             }
 
@@ -125,11 +166,21 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+    }
 
-        ArrayAdapter<String> adapter=new ArrayAdapter<>(this,android.R.layout.simple_expandable_list_item_1,masalar_list);
+    private void loadCity(){
 
-        liste.setAdapter(adapter);
+        if (swipeRefresh.isRefreshing()){
+            swipeRefresh.setRefreshing(false);
+        }
+    }
 
+
+    @Override
+    public void onRefresh() {
+        Toast.makeText(getApplicationContext(),"Yenilendi",Toast.LENGTH_SHORT).show();
+        loadCity();
     }
 }
+
 

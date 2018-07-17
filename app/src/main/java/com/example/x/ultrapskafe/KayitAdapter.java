@@ -11,12 +11,12 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class OzelAdapter extends BaseAdapter {
+public class KayitAdapter extends BaseAdapter {
 
     private LayoutInflater mInflater;
     private List<Masa> mMasaListesi;
 
-    public OzelAdapter(Activity activity, List<Masa> masalar) {
+    public KayitAdapter(Activity activity, List<Masa> masalar) {
         mInflater = (LayoutInflater) activity.getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
         mMasaListesi = masalar;
@@ -41,7 +41,7 @@ public class OzelAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View satirView;
 
-        satirView = mInflater.inflate(R.layout.satir, null);
+        satirView = mInflater.inflate(R.layout.kayitlar, null);
         TextView textView =
                 (TextView) satirView.findViewById(R.id.yazi);
         ImageView imageView =
@@ -49,31 +49,33 @@ public class OzelAdapter extends BaseAdapter {
 
         Masa masa = mMasaListesi.get(position);
 
-        textView.setText("MASANO: "+masa.getMASA_NO()+" MASATURUID: "+masa.getMASA_TURU_ID()+" MASADURUMU: "+masa.getMASA_DURUMU());
 
         String md= masa.getMASA_DURUMU();
 
         String mti= masa.getMASA_TURU_ID();
 
-        if (mti=="1" && md=="0") {
+        if (mti.equals("1") && md.equals("0")) {
             imageView.setImageResource(R.drawable.m10);
         }
-        if (mti=="1" && md=="1"){
+        if (mti.equals("1") && md.equals("1")){
             imageView.setImageResource(R.drawable.m11);
         }
-        if (mti=="2" && md=="0") {
+        if (mti.equals("2") && md.equals("0")) {
             imageView.setImageResource(R.drawable.m20);
         }
-        if (mti=="2" && md=="1"){
+        if (mti.equals("2") && md.equals("1")){
             imageView.setImageResource(R.drawable.m21);
         }
-        if (mti=="3" && md=="0") {
+        if (mti.equals("3") && md.equals("0")) {
             imageView.setImageResource(R.drawable.m30);
         }
 
-        if (mti=="3" && md=="1"){
+        if (mti.equals("3") && md.equals("1")){
             imageView.setImageResource(R.drawable.m31);
         }
+
+
+        textView.setText(masa.getYAPILAN_ISLER()+"\n"+masa.getTARIH_SAAT());
 
         return satirView;
 
