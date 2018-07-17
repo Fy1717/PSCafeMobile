@@ -26,13 +26,13 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener {
+public class Kayitlar extends Activity implements SwipeRefreshLayout.OnRefreshListener {
     private SwipeRefreshLayout swipeRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_kayitlar);
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
         swipeRefresh.setOnRefreshListener(this);
 
@@ -125,7 +125,7 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
                 listemiz.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(Kayitlar.this);
                         builder.setTitle("MASA  "+ masalar.get(i).getMASA_NO());
                         builder.setMessage(" Açılış Saati  : "+masalar.get(i).getACILIS_SAATI()+"\n Kapanış Saati  : "+masalar.get(i).getKAPANIS_SAATI()+"\n Kol Sayısı  : " +masalar.get(i).getKOL_SAYISI());
 

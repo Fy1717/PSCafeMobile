@@ -10,14 +10,12 @@ public class Masa {
     private String ACILIS_SAATI;
     private String KAPANIS_SAATI;
     private String UCRET ;
-    private String YAPILAN_ISLER;
-    private String TARIH_SAAT;
-    private String KAZANC;
 
 
 
 
-    public Masa(String ID,String MASA_NO,String MASA_TURU_ID,String MASA_DURUMU,String KOL_SAYISI,String ACILIS_SAATI,String KAPANIS_SAATI,String UCRET,String YAPILAN_ISLER,String TARIH_SAAT,String KAZANC){
+
+    public Masa(String ID,String MASA_NO,String MASA_TURU_ID,String MASA_DURUMU,String KOL_SAYISI,String ACILIS_SAATI,String KAPANIS_SAATI,String UCRET){
 
         super();
 
@@ -29,9 +27,7 @@ public class Masa {
         this.ACILIS_SAATI=ACILIS_SAATI;
         this.KAPANIS_SAATI=KAPANIS_SAATI;
         this.UCRET=UCRET;
-        this.YAPILAN_ISLER=YAPILAN_ISLER;
-        this.TARIH_SAAT=TARIH_SAAT;
-        this.KAZANC=KAZANC;
+
 
     }
 
@@ -100,27 +96,5 @@ public class Masa {
         this.UCRET = UCRET;
     }
 
-    public String getYAPILAN_ISLER() {
-        return YAPILAN_ISLER;
-    }
 
-    public void setYAPILAN_ISLER(String YAPILAN_ISLER) {
-        this.YAPILAN_ISLER = YAPILAN_ISLER;
-    }
-
-    public String getTARIH_SAAT() {
-        return TARIH_SAAT;
-    }
-
-    public void setTARIH_SAAT(String TARIH_SAAT) {
-        this.TARIH_SAAT = TARIH_SAAT;
-    }
-
-    public String getKAZANC() {
-        return KAZANC;
-    }
-
-    public void setKAZANC(String KAZANC) {
-        this.KAZANC = KAZANC;
-    }
 }

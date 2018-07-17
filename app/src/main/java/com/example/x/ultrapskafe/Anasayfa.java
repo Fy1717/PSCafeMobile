@@ -27,5 +27,14 @@ public class Anasayfa extends AppCompatActivity {
         });
 
 
+        toKayıtlar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent toKayıtlar = new Intent(Anasayfa.this,Kayitlar.class);
+                startActivity(toKayıtlar);
+            }
+        });
+
+
     }
 }

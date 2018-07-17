@@ -41,7 +41,7 @@ public class KayitAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View satirView;
 
-        satirView = mInflater.inflate(R.layout.kayitlar, null);
+        satirView = mInflater.inflate(R.layout.satir, null);
         TextView textView =
                 (TextView) satirView.findViewById(R.id.yazi);
         ImageView imageView =
@@ -75,7 +75,7 @@ public class KayitAdapter extends BaseAdapter {
         }
 
 
-        textView.setText(masa.getYAPILAN_ISLER()+"\n"+masa.getTARIH_SAAT());
+        textView.setText("MASANO: "+masa.getMASA_NO()+" MASATURUID: "+masa.getMASA_TURU_ID()+" MASADURUMU: "+masa.getMASA_DURUMU());
 
         return satirView;
 

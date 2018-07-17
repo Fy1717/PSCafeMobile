@@ -49,7 +49,6 @@ public class OzelAdapter extends BaseAdapter {
 
         Masa masa = mMasaListesi.get(position);
 
-        textView.setText("MASANO: "+masa.getMASA_NO()+" MASATURUID: "+masa.getMASA_TURU_ID()+" MASADURUMU: "+masa.getMASA_DURUMU());
 
         String md= masa.getMASA_DURUMU();
 
@@ -74,6 +73,8 @@ public class OzelAdapter extends BaseAdapter {
         if (mti=="3" && md=="1"){
             imageView.setImageResource(R.drawable.m31);
         }
+
+        textView.setText("MASANO: "+masa.getMASA_NO()+" MASATURUID: "+masa.getMASA_TURU_ID()+" MASADURUMU: "+masa.getMASA_DURUMU());
 
         return satirView;
 
