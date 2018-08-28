@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">UltraPsKafe</string>
+    <string name="app_name">PS Kafe</string>
+    <string name="anasayfa">UYGULAMANIZA HOŞGELDİNİZ \n\n  *MASALARINIZIN TÜRLERİNİ\n*DURUMLARINI\n*KİŞİ SAYISINI\n
+        GÖREBİLMEK İÇİN MASALAR BUTONUNA.. \n\nSON 10 KAYDI GÖREBİLMEK İÇİN KAYITLAR BUTONUNA BASABİLİRSİNİZ.. </string>
 
 
 </resources>

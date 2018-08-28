@@ -2,6 +2,7 @@ package com.example.x.ultrapskafe;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.StrictMode;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.util.Log;
 
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -36,116 +38,96 @@ public class Kayitlar extends Activity implements SwipeRefreshLayout.OnRefreshLi
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
         swipeRefresh.setOnRefreshListener(this);
 
-        final List<Masa> masalar = new ArrayList<>();
+        ImageView geri = (ImageView) findViewById(R.id.geri);
 
-        StrictMode.ThreadPolicy policy=new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        geri.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Kayitlar.this, Anasayfa.class);
+                startActivity(i);
+            }
+        });
 
+        final List<Kayıt> kayitlar = new ArrayList<>();
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-
-
-        String masalar_url="http://tunalisimitcisi.com/MasaDurum.asmx/MasalariGetir";
-
-
-
-
-        HttpURLConnection baglanti=null;
-
+        String kayitlar_url = "http://tunalisimitcisi.com/MasaDurum.asmx/KayitlariGetir";
+        HttpURLConnection baglanti = null;
 
         try {
 
-            URL url = new URL(masalar_url);
+            URL url = new URL(kayitlar_url);
+            baglanti = (HttpURLConnection) url.openConnection();
+            int baglanti_durumu = baglanti.getResponseCode();
+            if (baglanti_durumu == HttpURLConnection.HTTP_OK) {
 
-            baglanti=(HttpURLConnection) url.openConnection();
+                BufferedInputStream stream = new BufferedInputStream(baglanti.getInputStream());
 
+                DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 
-            int baglanti_durumu=baglanti.getResponseCode();
+                DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 
+                Document document = documentBuilder.parse(stream);
 
-            if (baglanti_durumu==HttpURLConnection.HTTP_OK){
+                final NodeList kayitlarNodeList = document.getElementsByTagName("Kayitlar");
 
-                BufferedInputStream stream= new BufferedInputStream(baglanti.getInputStream());
+                for (int i = 0; i < kayitlarNodeList.getLength(); i++) {
 
+                    Element element = (Element) kayitlarNodeList.item(i);
 
-                DocumentBuilderFactory documentBuilderFactory=DocumentBuilderFactory.newInstance();
+                    NodeList nodeListID = element.getElementsByTagName("ID");
 
-                DocumentBuilder documentBuilder=documentBuilderFactory.newDocumentBuilder();
+                    NodeList nodeListMASA_NO = element.getElementsByTagName("MASA_NO");
 
-                Document document=documentBuilder.parse(stream);
+                    NodeList nodeListYAPILAN_ISLER = element.getElementsByTagName("YAPILAN_ISLER");
 
+                    NodeList nodeListTARIH_SAAT = element.getElementsByTagName("TARIH_SAAT");
 
-                final NodeList masalarNodeList=document.getElementsByTagName("Masalar");
+                    NodeList nodeListKAZANC = element.getElementsByTagName("KAZANC");
 
+                    String ID = "";
+                    String MASA_NO = "";
+                    String YAPILAN_ISLER = "";
+                    String TARIH_SAAT = "";
+                    String KAZANC = "";
 
-                for (int i=0;i<masalarNodeList.getLength(); i++){
+                    try {
 
-                    Element element =(Element) masalarNodeList.item(i);
+                        ID = nodeListID.item(0).getFirstChild().getNodeValue();
 
+                        MASA_NO = nodeListMASA_NO.item(0).getFirstChild().getNodeValue();
 
-                    NodeList nodeListID=element.getElementsByTagName("ID");
+                        YAPILAN_ISLER = nodeListYAPILAN_ISLER.item(0).getFirstChild().getNodeValue();
 
-                    NodeList nodeListMASA_NO=element.getElementsByTagName("MASA_NO");
+                        TARIH_SAAT = nodeListTARIH_SAAT.item(0).getFirstChild().getNodeValue();
 
-                    NodeList nodeListMASA_TURU_ID=element.getElementsByTagName("MASA_TURU_ID");
-
-                    NodeList nodeListMASA_DURUM=element.getElementsByTagName("MASA_DURUM");
-
-                    NodeList nodeListKOL_SAYISI=element.getElementsByTagName("KOL_SAYISI");
-
-                    NodeList nodeListACILIS_SAATI=element.getElementsByTagName("ACILIS_SAATI");
-
-                    NodeList nodeListKAPANIS_SAATI=element.getElementsByTagName("KAPANIS_SAATI");
-
-                    NodeList nodeListUCRET=element.getElementsByTagName("UCRET");
-
-
-
-                    String ID=nodeListID.item(0).getFirstChild().getNodeValue ();
-
-                    String MASA_NO=nodeListMASA_NO.item(0).getFirstChild().getNodeValue();
-
-                    String MASA_TURU_ID=nodeListMASA_TURU_ID.item(0).getFirstChild().getNodeValue();
-
-                    String MASA_DURUM=nodeListMASA_DURUM.item(0).getFirstChild().getNodeValue();
-
-                    String KOL_SAYISI=nodeListKOL_SAYISI.item(0).getFirstChild().getNodeValue();
-
-                    String ACILIS_SAATI=nodeListACILIS_SAATI.item(0).getFirstChild().getNodeValue();
-
-                    String KAPANIS_SAATI=nodeListKAPANIS_SAATI.item(0).getFirstChild().getNodeValue();
-
-                    String UCRET=nodeListUCRET.item(0).getFirstChild().getNodeValue();
+                        KAZANC = nodeListKAZANC.item(0).getFirstChild().getNodeValue();
 
 
+                    } catch (Exception e) {
+                        KAZANC = "0";
+                    }
 
-                    masalar.add( new Masa(ID,MASA_NO,MASA_TURU_ID,MASA_DURUM,KOL_SAYISI,ACILIS_SAATI,KAPANIS_SAATI,UCRET));
+
+                    kayitlar.add(new Kayıt(ID, MASA_NO, YAPILAN_ISLER, TARIH_SAAT, KAZANC));
 
                 }
                 final ListView listemiz = (ListView) findViewById(R.id.liste);
-                OzelAdapter adaptorumuz=new OzelAdapter(this, masalar);
-                listemiz.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(Kayitlar.this);
-                        builder.setTitle("MASA  "+ masalar.get(i).getMASA_NO());
-                        builder.setMessage(" Açılış Saati  : "+masalar.get(i).getACILIS_SAATI()+"\n Kapanış Saati  : "+masalar.get(i).getKAPANIS_SAATI()+"\n Kol Sayısı  : " +masalar.get(i).getKOL_SAYISI());
+                KayitAdapter kayitAdapter = new KayitAdapter(this, kayitlar);
 
-
-                        builder.show();
-                    }
-                });
-                listemiz.setAdapter(adaptorumuz);
+                listemiz.setAdapter(kayitAdapter);
 
             }
 
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
 
-            Log.e("XML PARSE HATASI ",e.getMessage().toString());
+            Log.e("XML PARSE HATASI ", e.getMessage().toString());
 
 
-        }finally {
+        } finally {
 
-            if (baglanti !=null){
+            if (baglanti != null) {
 
                 baglanti.disconnect();
 
@@ -155,9 +137,9 @@ public class Kayitlar extends Activity implements SwipeRefreshLayout.OnRefreshLi
 
     }
 
-    private void loadCity(){
+    private void loadCity() {
 
-        if (swipeRefresh.isRefreshing()){
+        if (swipeRefresh.isRefreshing()) {
             swipeRefresh.setRefreshing(false);
         }
     }
@@ -165,7 +147,7 @@ public class Kayitlar extends Activity implements SwipeRefreshLayout.OnRefreshLi
 
     @Override
     public void onRefresh() {
-        Toast.makeText(getApplicationContext(),"Yenilendi",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Yenilendi", Toast.LENGTH_SHORT).show();
         loadCity();
     }
 }

@@ -2,14 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.x.ultrapskafe">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ps"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ps"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".Login">
@@ -19,9 +21,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Anasayfa" />
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".Kayitlar"></activity>
+        <activity
+            android:name=".Anasayfa"
+            android:label="Anasayfa"
+            android:parentActivityName=".Anasayfa">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Anasayfa" />
+        </activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".Kayitlar" />
     </application>
 
 </manifest>

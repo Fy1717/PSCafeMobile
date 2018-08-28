@@ -12,9 +12,6 @@ public class Masa {
     private String UCRET ;
 
 
-
-
-
     public Masa(String ID,String MASA_NO,String MASA_TURU_ID,String MASA_DURUMU,String KOL_SAYISI,String ACILIS_SAATI,String KAPANIS_SAATI,String UCRET){
 
         super();
@@ -28,9 +25,7 @@ public class Masa {
         this.KAPANIS_SAATI=KAPANIS_SAATI;
         this.UCRET=UCRET;
 
-
     }
-
 
     public String getID() {
         return ID;
@@ -63,6 +58,7 @@ public class Masa {
     public void setMASA_DURUMU(String MASA_DURUMU) {
         this.MASA_DURUMU = MASA_DURUMU;
     }
+
 
     public String getKOL_SAYISI() {
         return KOL_SAYISI;

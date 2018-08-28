@@ -3,23 +3,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#f85"
     tools:context=".Anasayfa">
+
+
+
+    <ImageView
+        android:layout_width="350dp"
+        android:layout_height="273dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/psana"
+        android:padding="18dp" />
 
     <Button
         android:id="@+id/toMain"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/background_login"
+        android:clickable="true"
+        android:layout_gravity="center"
+        android:padding="16dp"
         android:text="MASALAR"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="195dp"
-        tools:ignore="MissingConstraints" />
+        android:textAllCaps="false"
+        android:textColor="#fff"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/toKayitlar"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/background_login"
+        android:clickable="true"
+        android:layout_gravity="center"
+        android:padding="16dp"
         android:text="KAYITLAR"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="321dp" />
+        android:textAllCaps="false"
+        android:textColor="#fff"
+        android:textStyle="bold" />
 </LinearLayout>

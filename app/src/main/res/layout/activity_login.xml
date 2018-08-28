@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
     android:background="#f85">
 
+
+
     <ImageView
+        android:background="@drawable/ps"
         android:layout_width="match_parent"
-        android:layout_height="190dp"
+        android:layout_height="220dp"
         android:layout_gravity="center_horizontal"
         android:padding="18dp"
         android:layout_marginTop="48dp"
@@ -18,16 +22,16 @@
         android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:drawablePadding="12dp"
         android:ems="10"
-        android:hint="username"
-        android:textColor="#fff"
+        android:hint="Kullanıcı Adı"
+        android:textColor="#000"
         android:inputType="textEmailAddress"
         android:maxLines="1"
         android:padding="8dp"
         android:textAlignment="center"
-        android:textColorHint="#fff"
+        android:textColorHint="#000"
         android:textStyle="bold" />
 
     <EditText
@@ -37,13 +41,13 @@
         android:layout_marginTop="4dp"
         android:drawablePadding="12dp"
         android:ems="10"
-        android:hint=". . . . . ."
+        android:hint="Parola"
         android:inputType="textPassword"
         android:maxLines="1"
         android:padding="8dp"
         android:textAlignment="center"
-        android:textColor="#fff"
-        android:textColorHint="#fff"
+        android:textColor="#000"
+        android:textColorHint="#000"
         android:textStyle="bold" />
 
     <Button
@@ -51,12 +55,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:background="@drawable/background_login"
         android:clickable="true"
         android:padding="16dp"
-        android:text="LOGIN"
+        android:text="Giriş"
         android:textAllCaps="false"
         android:textColor="#fff"
         android:textStyle="bold" />
+
+
 
 
 </LinearLayout>
