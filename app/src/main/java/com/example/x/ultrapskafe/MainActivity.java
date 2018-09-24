@@ -126,9 +126,7 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
         } finally {
 
             if (baglanti != null) {
-
                 baglanti.disconnect();
-
             }
 
         }
@@ -147,6 +145,8 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
     public void onRefresh() {
         Toast.makeText(getApplicationContext(), "Yenilendi", Toast.LENGTH_SHORT).show();
         loadCity();
+        finish();
+        startActivity(getIntent());
     }
 }
 

@@ -149,6 +149,8 @@ public class Kayitlar extends Activity implements SwipeRefreshLayout.OnRefreshLi
     public void onRefresh() {
         Toast.makeText(getApplicationContext(), "Yenilendi", Toast.LENGTH_SHORT).show();
         loadCity();
+        finish();
+        startActivity(getIntent());
     }
 }
 
